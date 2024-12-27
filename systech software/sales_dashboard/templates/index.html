@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Systech Sales Dashboard</title>
+    <!-- Include Bootstrap for layout -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Custom CSS -->
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #2a5298;
+            color: white;
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 1s ease-in-out;
+        }
+
+        nav h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+        }
+
+        .btn-primary {
+            background-color: #f76c6c;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin-top: 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff5e5e;
+            transform: scale(1.1);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 50px 20px;
+            text-align: center;
+            background-color: #ffffff;
+        }
+
+        .feature-item {
+            margin-bottom: 30px;
+            animation: slideUp 1s ease-in-out;
+        }
+
+        .feature-item h3 {
+            color: #2a5298;
+            margin-top: 15px;
+        }
+
+        .feature-item img {
+            width: 80px;
+            height: 80px;
+            transition: transform 0.3s;
+        }
+
+        .feature-item img:hover {
+            transform: scale(1.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2a5298;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            animation: slideUp 1.5s ease-in-out;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <h1>Systech Software Pvt Ltd</h1>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Welcome to the Systech Sales Dashboard</h1>
+        <p>Your one-stop solution for managing, tracking, and analyzing sales data effectively.</p>
+        <a href="/" class="btn btn-primary">Get Started</a>
+
+        <a href="/monthly" class="btn btn-primary">Get Started</a>
+        <a href="/product" class="btn btn-primary">Get Started</a>
+        
+
+
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Key Features</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 feature-item">
+                    <img src"" alt="Sales Tracking">
+                    <h3>Sales Tracking</h3>
+                    <p>Real-time updates on your sales performance and progress.</p>
+                </div>
+                <div class="col-md-4 feature-item">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2714/2714585.png" alt="Data Analysis">
+                    <h3>Data Analysis</h3>
+                    <p>Advanced tools to analyze and visualize your sales data.</p>
+                </div>
+                <div class="col-md-4 feature-item">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2331/2331894.png" alt="User Management">
+                    <h3>User Management</h3>
+                    <p>Seamless management of your sales team and customers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Systech Software Pvt Ltd. All rights reserved.</p>
+    </footer>
+</body>
+</html>

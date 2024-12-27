@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee and Product Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Add Employee Details</h2>
+    <form id="employeeForm">
+        <label for="employeeName">Employee Name</label>
+        <input type="text" id="employeeName" name="employeeName" placeholder="Enter employee name" required>
+
+        <label for="employeeId">Employee ID</label>
+        <input type="text" id="employeeId" name="employeeId" placeholder="Enter employee ID" required>
+
+        <label for="employeeRole">Role</label>
+        <input type="text" id="employeeRole" name="employeeRole" placeholder="Enter employee role" required>
+
+        <button type="submit">Add Employee</button>
+    </form>
+
+    <h2>Add Product Details</h2>
+    <form id="productForm">
+        <label for="productName">Product Name</label>
+        <input type="text" id="productName" name="productName" placeholder="Enter product name" required>
+
+        <label for="productId">Product ID</label>
+        <input type="text" id="productId" name="productId" placeholder="Enter product ID" required>
+
+        <label for="productPrice">Price</label>
+        <input type="number" id="productPrice" name="productPrice" placeholder="Enter product price" required>
+
+        <button type="submit">Add Product</button>
+    </form>
+
+    <h2>Employee and Product Details</h2>
+    <table id="detailsTable">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Additional Info</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be dynamically added here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    async function sendDataToServer(endpoint, data) {
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert(result.message);
+                addToTable(data);
+            } else {
+                alert(`Error: ${result.message}`);
+            }
+        } catch (error) {
+            alert('Failed to connect to the server.');
+        }
+    }
+
+    function addToTable(data) {
+        const table = document.getElementById('detailsTable').querySelector('tbody');
+        const row = document.createElement('tr');
+
+        const typeCell = document.createElement('td');
+        const nameCell = document.createElement('td');
+        const idCell = document.createElement('td');
+        const infoCell = document.createElement('td');
+
+        typeCell.textContent = data.type;
+        nameCell.textContent = data.name;
+        idCell.textContent = data.id;
+        infoCell.textContent = data.additionalInfo;
+
+        row.appendChild(typeCell);
+        row.appendChild(nameCell);
+        row.appendChild(idCell);
+        row.appendChild(infoCell);
+
+        table.appendChild(row);
+    }
+
+    document.getElementById('employeeForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const name = document.getElementById('employeeName').value;
+        const id = document.getElementById('employeeId').value;
+        const role = document.getElementById('employeeRole').value;
+        
+        const data = {
+            type: 'Employee',
+            name: name,
+            id: id,
+            additionalInfo: role,
+        };
+
+        sendDataToServer('/addEmployee', data);
+    });
+
+    document.getElementById('productForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const name = document.getElementById('productName').value;
+        const id = document.getElementById('productId').value;
+        const price = document.getElementById('productPrice').value;
+
+        const data = {
+            type: 'Product',
+            name: name,
+            id: id,
+            additionalInfo: `Price: $${price}`,
+        };
+
+        sendDataToServer('/addProduct', data);
+    });
+</script>
+
+</body>
+</html>

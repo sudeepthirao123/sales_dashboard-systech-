@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Product Sales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Record Daily Product Sales</h2>
+    <form id="salesForm">
+        <label for="employeeName">Employee Name</label>
+        <input type="text" id="employeeName" name="employeeName" placeholder="Enter employee name" required>
+
+        <label for="productId">Product ID</label>
+        <input type="text" id="productId" name="productId" placeholder="Enter product ID" required>
+
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="quantity">Quantity Sold</label>
+        <input type="number" id="quantity" name="quantity" placeholder="Enter quantity sold" required>
+
+        <button type="submit">Add Sales Record</button>
+    </form>
+
+    <h2>Daily Sales Records</h2>
+    <table id="salesTable">
+        <thead>
+            <tr>
+                <th>Employee Name</th>
+                <th>Product ID</th>
+                <th>Date</th>
+                <th>Quantity Sold</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be dynamically added here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    async function sendDataToServer(endpoint, data) {
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert(result.message);
+                addToSalesTable(data);
+            } else {
+                alert(`Error: ${result.message}`);
+            }
+        } catch (error) {
+            alert('Failed to connect to the server.');
+        }
+    }
+
+    function addToSalesTable(data) {
+        const table = document.getElementById('salesTable').querySelector('tbody');
+        const row = document.createElement('tr');
+
+        const employeeNameCell = document.createElement('td');
+        const productIdCell = document.createElement('td');
+        const dateCell = document.createElement('td');
+        const quantityCell = document.createElement('td');
+
+        employeeNameCell.textContent = data.employeeName;
+        productIdCell.textContent = data.productId;
+        dateCell.textContent = data.date;
+        quantityCell.textContent = data.quantity;
+
+        row.appendChild(employeeNameCell);
+        row.appendChild(productIdCell);
+        row.appendChild(dateCell);
+        row.appendChild(quantityCell);
+
+        table.appendChild(row);
+    }
+
+    document.getElementById('salesForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const employeeName = document.getElementById('employeeName').value;
+        const productId = document.getElementById('productId').value;
+        const date = document.getElementById('date').value;
+        const quantity = document.getElementById('quantity').value;
+
+        const data = {
+            employeeName: employeeName,
+            productId: productId,
+            date: date,
+            quantity: quantity
+        };
+
+        sendDataToServer('/addDailySalesRecord', data);
+    });
+</script>
+
+</body>
+</html>
